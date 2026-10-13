@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rem's Build Week, Oct 5–11</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f8f8; --surface:#ffffff; --surface-2:#eef3f3; --ink:#14201f; --ink-2:#4a5a59; --line:#d9e2e1;
+  --accent:#0f8b8d; --accent-2:#0a6466; --accent-soft:#d8efef; --warn:#b4560f; --warn-soft:#fbe9d9;
+  --display:'Archivo',system-ui,sans-serif; --body:'Public Sans',system-ui,sans-serif; --mono:'IBM Plex Mono',ui-monospace,monospace;
+  --radius:12px;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#0e1514; --surface:#151f1e; --surface-2:#1b2827; --ink:#e4eeed; --ink-2:#9cb0ae; --line:#283836;
+    --accent:#3cc4c6; --accent-2:#7fdcdd; --accent-soft:#16383a; --warn:#f0a35e; --warn-soft:#3a2716;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 var(--body)}
+.wrap{max-width:1100px;margin:0 auto;padding:48px 24px 80px}
+h1,h2,h3{font-family:var(--display);margin:0;letter-spacing:-.01em}
+h1{font-size:44px;font-weight:800;line-height:1.08}
+h2{font-size:24px;font-weight:700;margin:56px 0 18px;padding-bottom:10px;border-bottom:2px solid var(--accent)}
+h3{font-size:18px;font-weight:700}
+.eyebrow{font-family:var(--mono);font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.lede{color:var(--ink-2);max-width:760px;margin:14px 0 28px;font-size:17px}
+.mono{font-family:var(--mono)}
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px}
+.stat b{display:block;font-family:var(--display);font-size:32px;font-weight:800;color:var(--accent)}
+.stat span{font-size:13px;color:var(--ink-2)}
+.days{display:grid;grid-template-columns:repeat(7,1fr);gap:10px}
+.day{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px;display:flex;flex-direction:column;gap:8px}
+.day .d{font-family:var(--mono);font-size:12px;color:var(--ink-2)}
+.day h3{font-size:15px;line-height:1.25}
+.bar{height:6px;background:var(--surface-2);border-radius:3px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:3px}
+.day p{margin:0;font-size:13px;color:var(--ink-2)}
+.day .n{font-family:var(--mono);font-size:11px;color:var(--ink-2)}
+.proj{display:grid;grid-template-columns:260px 1fr;gap:24px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px;margin-bottom:16px}
+.meta h3{font-size:20px;margin-bottom:8px}
+.path{font-family:var(--mono);font-size:12px;color:var(--ink-2);word-break:break-all;margin:2px 0}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.chip{font-family:var(--mono);font-size:11px;padding:3px 8px;border-radius:999px;background:var(--accent-soft);color:var(--accent-2)}
+.chip.warn{background:var(--warn-soft);color:var(--warn)}
+.log{list-style:none;margin:0;padding:0}
+.log li{display:grid;grid-template-columns:62px 1fr;gap:12px;padding:8px 0;border-top:1px solid var(--line)}
+.log li:first-child{border-top:0;padding-top:0}
+.log .dt{font-family:var(--mono);font-size:12px;color:var(--accent);padding-top:2px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px}
+.card .dt{font-family:var(--mono);font-size:12px;color:var(--accent)}
+.card h3{font-size:16px;margin:4px 0 6px}
+.card p{margin:0;font-size:14px;color:var(--ink-2)}
+table{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+td,th{padding:10px 14px;text-align:left;border-top:1px solid var(--line);font-size:14px;vertical-align:top}
+th{font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-2);background:var(--surface-2);border-top:0}
+td.dt{font-family:var(--mono);font-size:12px;color:var(--accent);white-space:nowrap;width:80px}
+.loose{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.loose .card{border-left:4px solid var(--warn)}
+footer{margin-top:48px;font-size:13px;color:var(--ink-2)}
+@media (max-width:900px){.stats{grid-template-columns:repeat(2,1fr)}.days{grid-template-columns:repeat(2,1fr)}.proj{grid-template-columns:1fr}.grid,.loose{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">Mon Oct 5 – Sun Oct 11, 2026</div>
+  <h1>Rem's Build Week, Oct 5–11</h1>
+  <p class="lede">Built from the git log for C:\ClaudeFolder, the code files modified during the week, and your prompts in the Claude Code sessions active that week. Task notifications, compaction summaries and automated runs aren't counted. Most of the week's code was committed in a batch early on Oct 12; that work is credited here by file dates and prompts.</p>
+  <div class="stats">
+    <div class="stat"><b>10</b><span>commits in window</span></div>
+    <div class="stat"><b>59</b><span>Claude Code sessions</span></div>
+    <div class="stat"><b>700</b><span>prompts</span></div>
+    <div class="stat"><b>4</b><span>new programs</span></div>
+    <div class="stat"><b>6</b><span>notable outputs</span></div>
+  </div>
+</header>
+
+<h2>Day by day</h2>
+<div class="days">
+  <div class="day"><div class="d">MON 10-05</div><h3>Photo Viewer goes custom-domain</h3><div class="bar"><i style="width:47%"></i></div><p>remdvm.download tunnels, guest-only links, MP3s on web and Firestick.</p><div class="n">81 prompts · 8 sessions</div></div>
+  <div class="day"><div class="d">TUE 10-06</div><h3>The Locked Houses video</h3><div class="bar"><i style="width:84%"></i></div><p>Full narrated story built, ~30 stills reworked, two re-renders. Blender "The Tube" renders overnight.</p><div class="n">146 prompts · 9 sessions</div></div>
+  <div class="day"><div class="d">WED 10-07</div><h3>Folder Sync becomes Rem Backup</h3><div class="bar"><i style="width:100%"></i></div><p>Rename/move detection, scheduler tray app, group tabs, activity log, new icon.</p><div class="n">174 prompts · 13 sessions</div></div>
+  <div class="day"><div class="d">THU 10-08</div><h3>PDF Transcriber built</h3><div class="bar"><i style="width:35%"></i></div><p>119 histopathology PDFs transcribed, handwriting included; side-by-side checks.</p><div class="n">61 prompts · 5 sessions</div></div>
+  <div class="day"><div class="d">FRI 10-09</div><h3>Backup hardening, remote PCs</h3><div class="bar"><i style="width:70%"></i></div><p>Sticky tray error rule, empty-folder cleanup, Claude Code on plexserverpc and remnewhp.</p><div class="n">122 prompts · 13 sessions</div></div>
+  <div class="day"><div class="d">SAT 10-10</div><h3>Artifact List and log polish</h3><div class="bar"><i style="width:45%"></i></div><p>New Artifact List.ahk, Desktop scripts moved, Rem Backup summary layout.</p><div class="n">78 prompts · 10 sessions</div></div>
+  <div class="day"><div class="d">SUN 10-11</div><h3>Direct share links</h3><div class="bar"><i style="width:22%"></i></div><p>Single-video and folder links with short codes, Preferences menu, auto-online at start.</p><div class="n">38 prompts · 3 sessions</div></div>
+</div>
+
+<h2>Main projects</h2>
+
+<div class="proj">
+  <div class="meta">
+    <h3>Rem Backup</h3>
+    <div class="path">Rem Backup\Rem Backup.ahk</div>
+    <div class="path">Rem Backup\SyncPreviewGUI.ahk</div>
+    <div class="path">Rem Backup\Sync-Folders-Manual.ps1</div>
+    <div class="path">Rem Backup\Restamp-Timestamps.ps1</div>
+    <div class="chips"><span class="chip">AHK v1</span><span class="chip">PowerShell</span><span class="chip">4806167</span><span class="chip">e373839</span><span class="chip">3d1548e</span><span class="chip warn">Oct 10–11 edits committed Oct 12</span></div>
+  </div>
+  <ul class="log">
+    <li><span class="dt">10-07</span><span>Folder renames and file moves are now detected and done on the destination instead of being copied again (4806167). Turned it into a scheduled tray program with a one-time import from Second Copy, profile group tabs with drag-and-drop, grid lines, a star for preview profiles, an activity log with pinned headers and color-coded rows, 48/72-hour filters, an optional _SyncArchive, a tray error state, a spinning tray icon during copies, and the G2 icon. Renamed to <b>Rem Backup</b>, and it replaced Second Copy at startup.</span></li>
+    <li><span class="dt">10-08</span><span>Activity log: File Size column (KB/MB/GB), the reason for each update (size and date) on the same line, and a Today filter.</span></li>
+    <li><span class="dt">10-09</span><span>Removes empty destination folders and shows them in the preview. Long-path copy fix. Sticky tray error rule: a successful run clears the icon only when no other profile still has an error (3d1548e). remnewhp profiles, Stop button, sticky file cap, button layout changes.</span></li>
+    <li><span class="dt">10-10</span><span>Summary layout with count columns in the preview and activity log, failed counts, cancelled runs hidden, bold profile titles, and the current day/date/time in dark blue at the top of the GUI. Arrows run source → counts → destination.</span></li>
+    <li><span class="dt">10-11</span><span>The Last Run window uses the same count-column summary.</span></li>
+  </ul>
+</div>
+
+<div class="proj">
+  <div class="meta">
+    <h3>Online Photo Viewer</h3>
+    <div class="path">Online Photo Viewer\</div>
+    <div class="path">Online Photo Viewer\web\index.html</div>
+    <div class="path">mirror: M:\ClaudeFolder\Online Photo Viewer</div>
+    <div class="chips"><span class="chip">AHK v1</span><span class="chip">Python</span><span class="chip">JS</span><span class="chip">2f3f93a</span><span class="chip">5a14517</span><span class="chip warn">Oct 11 edits committed Oct 12</span></div>
+  </div>
+  <ul class="log">
+    <li><span class="dt">10-05</span><span>Bought remdvm.download and set up fixed Cloudflare tunnel hostnames (media, photos, myguest, myguest2), one per PC. Added MP3 playback with iPhone controls, no-password guest-only hosts, Logout, Clear all guests, and a multi-select folder picker. Removed the New-link button and owner emails (2f3f93a).</span></li>
+    <li><span class="dt">10-07</span><span>Thumbnail fixes for videos without poster art; a stale black thumbnail cache entry.</span></li>
+    <li><span class="dt">10-09</span><span>Filter box for the current page (5a14517).</span></li>
+    <li><span class="dt">10-11</span><span>Direct links with short codes to one video (no next/back, nothing else reachable) or one folder. Old links stay valid. New Preferences menu with the email settings, set-password and open shared_links. Goes online at start.</span></li>
+  </ul>
+</div>
+
+<div class="proj">
+  <div class="meta">
+    <h3>The Locked Houses video</h3>
+    <div class="path">The Locked Houses Video\build.py</div>
+    <div class="path">The Locked Houses Video\gen_images.ps1</div>
+    <div class="chips"><span class="chip">Python</span><span class="chip">ffmpeg</span><span class="chip">Gemini images</span><span class="chip warn">outputs untracked</span></div>
+  </div>
+  <ul class="log">
+    <li><span class="dt">10-05</span><span>Wrote the story script as an analogy for the Hugging Face hack, then rewrote it as a plain story with no jargon.</span></li>
+    <li><span class="dt">10-06</span><span>Ran a 60-second test, then the full narrated build: 77 Gemini stills, Ken Burns motion, karaoke captions. About 30 images reworked (consistent rooms and tubes, the robot, the central warehouse, the police and librarian scenes). Re-rendered twice to E:\REM Media Player\Hold, plus a YouTube thumbnail ("The AI HuggingFace Attack – An Analogy Story").</span></li>
+  </ul>
+</div>
+
+<div class="proj">
+  <div class="meta">
+    <h3>Story Animations: "The Tube"</h3>
+    <div class="path">Story Animations\The Tube.html</div>
+    <div class="path">Story Animations\render_server.py</div>
+    <div class="path">Story Animations\blender\*.py</div>
+    <div class="chips"><span class="chip">HTML/JS</span><span class="chip">Blender Cycles</span><span class="chip">MPFB</span><span class="chip warn">renders untracked</span></div>
+  </div>
+  <ul class="log">
+    <li><span class="dt">10-06</span><span>HTML animation of the opening in the Hello World sample style, then a 10-second HQ version (4K60 MP4). Installed Blender and rendered the opening in Cycles at 1080p24, then again with a realistic MPFB "Daniel". The GPU preference is switched on only while rendering. Frame folders deleted afterwards.</span></li>
+  </ul>
+</div>
+
+<div class="proj">
+  <div class="meta">
+    <h3>PDF Transcriber</h3>
+    <div class="path">PDF Transcriber\PDF Transcriber.ahk</div>
+    <div class="path">PDF Transcriber\Transcription - All PDFs\</div>
+    <div class="chips"><span class="chip">AHK v1</span><span class="chip">Claude API</span><span class="chip">new</span><span class="chip">2a1672f</span></div>
+  </div>
+  <ul class="log">
+    <li><span class="dt">10-08</span><span>New tool. It reads every PDF in Desktop PDFs, transcribes Source/Site and Patient History (typed or handwritten), and writes a .txt next to each PDF. Fixed a run that hung at "Starting". Spot-checked batches of 5 and 20, then built an HTML comparison of all 119 PDFs, including a single standalone file.</span></li>
+  </ul>
+</div>
+
+<div class="proj">
+  <div class="meta">
+    <h3>REM Media Player (AHK)</h3>
+    <div class="path">Rem Media Player AHK\REM Media Player.ahk</div>
+    <div class="chips"><span class="chip">AHK v1</span><span class="chip">ac558aa</span><span class="chip">d2152f3</span></div>
+  </div>
+  <ul class="log">
+    <li><span class="dt">10-05</span><span>Thicker red highlight on thumbnails. Smoother full-screen switch to the next video, keeping the controls. Number jump buttons reset to 0 on each new video.</span></li>
+    <li><span class="dt">10-07</span><span>Delete moved to the top-level menu and now also removes the .jpg and .tag files.</span></li>
+    <li><span class="dt">10-10</span><span>Main script committed (d2152f3). New Video Clips dropdown listing the subfolders of E:\REM Media Player\Video Clips, with a bold label.</span></li>
+  </ul>
+</div>
+
+<h2>Smaller programs and fixes</h2>
+<div class="grid">
+  <div class="card"><div class="dt">10-05</div><h3>Firestick Photo Viewer</h3><p>MP3 playback with album art or a music note, installed on both Fire TVs. Tray icon redesigned on 10-07 to fill the 16px space.</p></div>
+  <div class="card"><div class="dt">10-05</div><h3>Path Code Database</h3><p>Splash screen while the AHK version loads; startup speed compared with the VB5 original.</p></div>
+  <div class="card"><div class="dt">10-06</div><h3>Hotkey code renames</h3><p>Files in C:\pdftk\hotkeys codes starting with "code" renamed to "rem".</p></div>
+  <div class="card"><div class="dt">10-06</div><h3>NAS Backup Plan</h3><p>Two separate 10TB drives (no RAID) as primary and secondary backup; saved as an HTML plan.</p></div>
+  <div class="card"><div class="dt">10-07</div><h3>Format E-Stories</h3><p>Batch now uses the AvaMultilingualNeural voice; 20 older AvaNeural MP3s regenerated.</p></div>
+  <div class="card"><div class="dt">10-08</div><h3>Veo Video Generator</h3><p>One Generate button; costs checked against the new Vertex pricing and the Runway/Wan options.</p></div>
+  <div class="card"><div class="dt">10-09</div><h3>CopyActiveWindowToClipboard</h3><p>Screen-capture fix for blank or partial captures; IrfanView shows the result for 3 seconds.</p></div>
+  <div class="card"><div class="dt">10-09</div><h3>Envato Viewer / Plex Watch History</h3><p>Envato data moved out of ClaudeFolder (about 2,400 folders); Plex devices aliased to Kristen and Living Room.</p></div>
+  <div class="card"><div class="dt">10-10</div><h3>Artifact List (new)</h3><p>AHK list of all artifacts that opens one on click, on the second monitor, closing the current tab first.</p></div>
+  <div class="card"><div class="dt">10-10</div><h3>Desktop Scripts move</h3><p>Desktop AHK scripts moved to C:\ClaudeFolder\Desktop Scripts, callers and shortcuts redirected, three unused scripts deleted.</p></div>
+  <div class="card"><div class="dt">10-05</div><h3>App Launcher</h3><p>Chrome bookmark-page launch; Rem Backup icon and activity-log button on profile 4 (eea4547).</p></div>
+  <div class="card"><div class="dt">10-05–11</div><h3>Youtube Video Analyzer</h3><p>8 transcript summary reports generated during the week.</p></div>
+</div>
+
+<h2>Systems and setup</h2>
+<table>
+  <tr><th>Date</th><th>Work</th></tr>
+  <tr><td class="dt">10-05</td><td>Cloudflare account, the remdvm.download domain, and fixed tunnel hostnames for both photo-viewer PCs.</td></tr>
+  <tr><td class="dt">10-06</td><td>Blender installed; the GPU preference is toggled only while rendering. Blender frames deleted from C:, E: and Google Drive, and the Drive trash emptied.</td></tr>
+  <tr><td class="dt">10-06</td><td>Second Copy profiles audited for E:/G:/H: usage; orphaned H: backup sets and H:\Quicken Data and Backup deleted.</td></tr>
+  <tr><td class="dt">10-06</td><td>Gemini API spend reviewed: about $0.056 per image, saved to memory.</td></tr>
+  <tr><td class="dt">10-07</td><td>Second Copy Profiles.dat located (Show Preview check). D:\Downloads shared on the network. Second Copy removed from startup.</td></tr>
+  <tr><td class="dt">10-08</td><td>Empty top-level folders removed from \\plexserverpc\Lenovo-E; disk-usage scan on that drive.</td></tr>
+  <tr><td class="dt">10-08</td><td>Google AI Studio → Vertex billing change reviewed against Veo pricing.</td></tr>
+  <tr><td class="dt">10-09</td><td>Claude Code set up on plexserverpc and remnewhp: port forward through 192.168.1.69, a hosts entry, and Rem Backup profiles pointed at remnewhp.</td></tr>
+  <tr><td class="dt">10-10</td><td>Startup programs pruned (Logi, OneDrive, AMD StartCN/StartDVR, duplicate Fences, LM Studio). TravelLog moved to E:\European Vacation TravelLog.</td></tr>
+  <tr><td class="dt">10-11</td><td>Tray programs reviewed; AMD overlay pop-up during full-screen video looked into.</td></tr>
+</table>
+
+<h2>Loose ends</h2>
+<div class="loose">
+  <div class="card"><h3>Late commits</h3><p>Only 10 commits fall inside the window. The Firestick, Veo, Path Code, Format E-Stories and REM Media Player changes went into a 39-commit batch at 02:41 on Oct 12.</p></div>
+  <div class="card"><h3>Untracked outputs</h3><p>The Locked Houses MP4, images and test folder; three "The Tube" renders plus blender\tex; Online Photo Viewer\playlists\.</p></div>
+  <div class="card"><h3>plexserverpc E: scan</h3><p>The largest-files scan and email on Oct 8 were stopped before they finished. What is using the space on E: is still unknown.</p></div>
+  <div class="card"><h3>Online Photo Viewer links</h3><p>Hand-edited shared_links.txt entries behaved differently on M: (needed a browser restart). Worth re-checking after the auto-online-at-start change.</p></div>
+</div>
+
+<footer class="mono">Generated 2026-10-12 · window 2026-10-05 00:00 → 2026-10-11 23:59 local</footer>
+</div>
+</body>
+</html>
